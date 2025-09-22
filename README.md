@@ -1,5 +1,5 @@
 # Encryp and Decrypt with Key
-A simple web application for encrypting and decrypting files directly in your browser. Using AES-256-GCM encryption, this tool lets you protect your files with military-grade security without any complicated setup.
+A simple web application for encrypting and decrypting files directly in your browser. Using AES-256-GCM encryption, this tool lets you protect your files with military grade security without any complicated setup.
 
 
 ![image alt](https://github.com/Richardpandey/Encryp-and-Decrypt/blob/918f0e4fb555eabcc32f7f1506ea24f4ad988476/Screenshot.png)
@@ -8,7 +8,7 @@ A simple web application for encrypting and decrypting files directly in your br
 
 - **Encrypt:** Select any file, choose an encryption key (or generate one automatically), and download the encrypted version.
 - **Decrypt:** Upload your encrypted file, enter the same key, and get back your original file.
-- **Total Privacy:** Everything happens locally on your computer—no files or keys are ever sent to any server.
+- **Total Privacy:** Everything happens locally on your computer so no files or keys are ever sent to any server.
 
 ---
 
@@ -18,7 +18,7 @@ A simple web application for encrypting and decrypting files directly in your br
 - Supports custom keys if you prefer to use your own
 - Compresses files during encryption to save space
 - Works completely offline after loading the page
-- No installation required—just open in any modern browser
+- No installation required, just open in any modern browser
 
 ---
 
