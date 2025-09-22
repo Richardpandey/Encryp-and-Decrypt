@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure File Storage</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Encrpter and Decrypter
+  
+  </h2>
+
+    <div style="text-align:center; margin-bottom: 10px;"><small>Project by Richard</small></div>
+
+  <div class="section">
+    <h3>Upload & Encrypt File</h3>
+    <input type="file" id="fileInput" />
+    <button id="uploadBtn">Encrypt & Prepare</button>
+    <br><br>
+    <label>Encryption Key (save this!):</label>
+    <input type="text" id="encryptionKey" readonly style="width:400px;" />
+    <button id="copyKeyBtn">Copy Key</button>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3>Download & Decrypt File</h3>
+    <input type="file" id="encryptedInput" />
+    <input type="text" id="keyInput" placeholder="Enter encryption key" />
+    <button id="downloadBtn">Decrypt File</button>
+  </div>
+
+  <!-- Pako library -->
+  <script src="pako.min.js"></script>
+  <!-- Main JS -->
+  <script src="app.js"></script>
+</body>
+</html>
