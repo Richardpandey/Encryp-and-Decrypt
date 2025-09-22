@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure File Storage</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      min-height: 100vh;
+      padding: 15px;
+      color: #ffffff;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff4444;
+      font-size: 1.8rem;
+      margin: 10px 0 5px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .author {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #cccccc;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+      border: 1px solid #444;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      width: 100%;
+    }
+
+    .section h3 {
+      color: #ff4444;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #ff4444;
+      padding-bottom: 8px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #555;
+      border-radius: 6px;
+      width: 100%;
+      background: #333;
+      color: #ffffff;
+      font-size: 16px; /* Prevents zoom on iOS */
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="file"] {
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #cccccc;
+      border-radius: 8px;
+      width: 100%;
+      background: #ffffff;
+      color: #1a1a1a;
+      font-size: 16px; /* Prevents zoom on iOS */
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"]:hover {
+      background: #f8f8f8;
+      border-color: #ff4444;
+      transform: translateY(-1px);
+    }
+
+    input[type="file"]::file-selector-button {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      margin-right: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: #ff3333;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #ff4444;
+    }
+
+    input::placeholder {
+      color: #888;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      background: #ff4444;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #ff3333;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #copyKeyBtn {
+      background: #333;
+      border: 2px solid #ff4444;
+    }
+
+    #copyKeyBtn:hover {
+      background: #ff4444;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      background: #ff4444;
+      margin: 20px 0;
+      opacity: 0.3;
+      width: 100%;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 12px 0 5px 0;
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
+    .key-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .file-info {
+      color: #cccccc;
+      font-size: 0.9rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .action-buttons button {
+      flex: 1;
+    }
+
+    /* Mobile-specific adjustments */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        max-width: 100%;
+      }
+      
+      .section {
+        padding: 15px;
+        margin: 10px 0;
+      }
+      
+      h2 {
+        font-size: 1.6rem;
+      }
+      
+      .section h3 {
+        font-size: 1.2rem;
+      }
+      
+      input[type="text"],
+      input[type="file"] {
+        padding: 10px;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      
+      button {
+        padding: 12px;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 320px) {
+      h2 {
+        font-size: 1.4rem;
+      }
+      
+      .section h3 {
+        font-size: 1.1rem;
+      }
+      
+      .section {
+        padding: 12px;
+      }
+    }
+
+    /* Tablet and larger screens */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 600px;
+      }
+      
+      .key-container {
+        flex-direction: row;
+        align-items: center;
+      }
+      
+      .key-container input {
+        flex: 1;
+      }
+      
+      .key-container button {
+        width: auto;
+        flex: 0 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>File Encrypter and Decrypter</h2>
+    <div class="author">Project by Richard</div>
+
+    <div class="section">
+      <h3>Upload & Encrypt File</h3>
+      <input type="file" id="fileInput" />
+      <div class="file-info" id="fileInfo"></div>
+      <button id="uploadBtn">Encrypt & Prepare</button>
+      <br>
+      <label>Encryption Key (save this!):</label>
+      <div class="key-container">
+        <input type="text" id="encryptionKey" readonly placeholder="Encryption key will appear here" />
+        <button id="copyKeyBtn">Copy Key</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <h3>Download & Decrypt File</h3>
+      <input type="file" id="encryptedInput" />
+      <div class="file-info" id="encryptedFileInfo"></div>
+      <input type="text" id="keyInput" placeholder="Enter encryption key" />
+      <div class="action-buttons">
+        <button id="downloadBtn">Decrypt File</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pako library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+  <!-- Main JS -->
+  <script>
+    // --- File input handlers to show file info ---
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const fileInfo = document.getElementById('fileInfo');
+      if (file) {
+        const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
+        fileInfo.textContent = `Selected: ${file.name} (${fileSize} MB)`;
+        fileInfo.style.display = 'block';
+      } else {
+        fileInfo.style.display = 'none';
+      }
+    });
+
+    document.getElementById('encryptedInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const fileInfo = document.getElementById('encryptedFileInfo');
+      if (file) {
+        const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
+        fileInfo.textContent = `Selected: ${file.name} (${fileSize} MB)`;
+        fileInfo.style.display = 'block';
+      } else {
+        fileInfo.style.display = 'none';
+      }
+    });
+
+    // --- Helper: generate AES key from random bytes ---
+    async function getKeyFromBytes(keyBytes) {
+      return crypto.subtle.importKey(
+        'raw',
+        keyBytes,
+        'AES-GCM',
+        true,
+        ['encrypt','decrypt']
+      );
+    }
+
+    // --- Convert bytes to hex string ---
+    function bytesToHex(bytes) {
+      return Array.from(bytes).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    // --- Convert hex string to bytes ---
+    function hexToBytes(hex) {
+      const bytes = new Uint8Array(hex.length / 2);
+      for (let i = 0; i < bytes.length; i++) {
+        bytes[i] = parseInt(hex.substr(i*2,2),16);
+      }
+      return bytes;
+    }
+
+    // --- Encrypt + Compress ---
+    document.getElementById('uploadBtn').onclick = async () => {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) return alert('Please select a file first!');
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const compressed = pako.gzip(new Uint8Array(arrayBuffer));
+
+        const keyBytes = crypto.getRandomValues(new Uint8Array(32)); // 256-bit key
+        const key = await getKeyFromBytes(keyBytes);
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+
+        const encrypted = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, compressed);
+
+        const blob = new Blob([iv, new Uint8Array(encrypted)]);
+        const url = URL.createObjectURL(blob);
+
+        // Download encrypted file
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name + '.enc';
+        a.click();
+
+        // Show the key
+        const hexKey = bytesToHex(keyBytes);
+        const keyInput = document.getElementById('encryptionKey');
+        keyInput.value = hexKey;
+        
+        alert('File encrypted successfully! Downloading encrypted file...');
+      } catch (error) {
+        alert('Error encrypting file: ' + error.message);
+      }
+    };
+
+    // --- Copy key to clipboard ---
+    document.getElementById('copyKeyBtn').onclick = async () => {
+      const keyInput = document.getElementById('encryptionKey');
+      if (!keyInput.value) {
+        alert('No encryption key generated yet!');
+        return;
+      }
+      
+      try {
+        await navigator.clipboard.writeText(keyInput.value);
+        alert('Encryption key copied to clipboard!');
+      } catch (err) {
+        // Fallback for older browsers
+        keyInput.select();
+        document.execCommand('copy');
+        alert('Encryption key copied to clipboard!');
+      }
+    };
+
+    // --- Decrypt + Decompress ---
+    document.getElementById('downloadBtn').onclick = async () => {
+      const file = document.getElementById('encryptedInput').files[0];
+      const hexKey = document.getElementById('keyInput').value.trim();
+      if (!file) return alert('Please select an encrypted file!');
+      if (!hexKey) return alert('Please enter the encryption key!');
+
+      try {
+        const keyBytes = hexToBytes(hexKey);
+        const key = await getKeyFromBytes(keyBytes);
+
+        const buffer = await file.arrayBuffer();
+        const iv = buffer.slice(0,12);
+        const encryptedData = buffer.slice(12);
+
+        const decrypted = await crypto.subtle.decrypt({name:'AES-GCM', iv:new Uint8Array(iv)}, key, encryptedData);
+        const original = pako.ungzip(new Uint8Array(decrypted));
+
+        const originalBlob = new Blob([original]);
+        const url = URL.createObjectURL(originalBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name.replace('.enc','');
+        a.click();
+
+        alert('File decrypted successfully!');
+      } catch (err) {
+        alert('Decryption failed! Wrong key or corrupted file.');
+      }
+    };
+  </script>
+</body>
+</html>
