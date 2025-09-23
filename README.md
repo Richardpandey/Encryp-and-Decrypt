@@ -4,6 +4,24 @@ A simple web application for encrypting and decrypting files directly in your br
 
 ![image alt](https://github.com/Richardpandey/Encryp-and-Decrypt/blob/918f0e4fb555eabcc32f7f1506ea24f4ad988476/Screenshot.png)
 
+
+##  Quick Start
+
+### 1. Download the git file
+```bash
+git clone https://github.com/Richardpandey/Encryp-and-Decrypt.git
+```
+
+### 2. Move to the Directory
+```bash
+cd Encryp-and-Decrypt
+```
+
+### 3. Open HTML File
+```bash
+open index.html
+```
+
 ## How It Works
 
 - **Encrypt:** Select any file, choose an encryption key (or generate one automatically), and download the encrypted version.
